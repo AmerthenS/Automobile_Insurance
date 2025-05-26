@@ -6,8 +6,14 @@ import com.hexaware.automobile.entities.PaymentStatus;
 import java.util.List;
 
 public interface PaymentService {
-    Payment makePayment(Payment payment);
-    List<Payment> getPaymentsByStatus(PaymentStatus status);
+    
+    Payment savePayment(Payment payment);  
+
+    // Read
     Payment getPaymentById(Integer id);
-	List<Payment> getAllPayments();
+    List<Payment> getAllPayments();
+    List<Payment> getPaymentsByStatus(PaymentStatus status);
+
+    
+    void deletePaymentById(Integer id);
 }

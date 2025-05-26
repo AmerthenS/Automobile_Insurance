@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name="proposals")
 public class Proposal {
     public Proposal() {
 		super();
@@ -103,7 +104,7 @@ public class Proposal {
     private String vehicleModel;
 
     @Enumerated(EnumType.STRING)
-    private ProposalStatus prstatus = ProposalStatus.PROPOSAL_SUBMITTED;
+    private ProposalStatus prstatus = ProposalStatus.proposal_submitted;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 

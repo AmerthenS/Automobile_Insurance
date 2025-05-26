@@ -7,4 +7,10 @@ public interface OfficerService {
     Optional<Officer> loginOfficer(String email, String password);
 
 	Optional<Officer> getOfficerByEmail(String email);
+
+	Officer registerOfficer(Officer officer);
+
+	Optional<Officer> getAllOfficers();
+
+	Optional<Officer> getOfficerById(int i);
 }

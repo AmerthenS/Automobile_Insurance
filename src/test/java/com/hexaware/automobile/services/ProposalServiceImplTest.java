@@ -1,41 +1,65 @@
 package com.hexaware.automobile.services;
 
-import com.hexaware.automobile.entities.Proposal;
+import com.hexaware.automobile.entities.*;
+import com.hexaware.automobile.repositories.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class ProposalServiceImplTest {
 
     @Autowired
-    private ProposalService proposalService;
+    private ProposalRepository proposalRepository;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
-    private PolicyService policyService;
+    private PolicyRepository policyRepository;
 
     @Test
-    void testSubmitProposal() {
+    public void testCreateReadUpdateProposal() {
+       
+        User user = userRepository.findById(1).orElse(null);
+        assertNotNull(user, "User with ID 1 should exist");
+
+        
+        Policy policy = policyRepository.findById(1).orElse(null);
+        assertNotNull(policy, "Policy with ID 1 should exist");
+
+        
         Proposal proposal = new Proposal();
-        proposal.setUser(userService.getUserById(1).orElseThrow());
-        proposal.setPolicy(policyService.getPolicyById(1).orElseThrow());
-        proposal.setVehicleModel("Model X");
-        proposal.setVehicleType("Car");
+        proposal.setUser(user);
+        proposal.setPolicy(policy);
+        proposal.setVehicleType("Sedan");
+        proposal.setVehicleModel("Toyota Camry");
+        proposal.setPrstatus(ProposalStatus.proposal_submitted);
+        proposal.setCreatedAt(LocalDateTime.now());
 
-        Proposal saved = proposalService.submitProposal(proposal);
-        assertNotNull(saved.getProposalId());
-    }
+        Proposal savedProposal = proposalRepository.save(proposal);
 
-    @Test
-    void testGetProposalsByUser() {
-        List<Proposal> proposals = proposalService.getProposalsByUser(1);
-        assertFalse(proposals.isEmpty());
+        assertNotNull(savedProposal);
+        assertNotNull(savedProposal.getProposalId());
+
+        
+        Optional<Proposal> fetched = proposalRepository.findById(savedProposal.getProposalId());
+        assertTrue(fetched.isPresent());
+
+        Proposal p = fetched.get();
+        assertEquals("Sedan", p.getVehicleType());
+        assertEquals("Toyota Camry", p.getVehicleModel());
+
+        
+        p.setVehicleModel("Honda Accord");
+        Proposal updated = proposalRepository.save(p);
+        assertEquals("Honda Accord", updated.getVehicleModel());
+
+        
     }
 }

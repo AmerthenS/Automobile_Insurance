@@ -9,30 +9,40 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
     @Autowired
     private PaymentRepository paymentRepo;
 
+    
     @Override
-    public Payment makePayment(Payment payment) {
+    public Payment savePayment(Payment payment) {
         return paymentRepo.save(payment);
     }
 
-    @Override
-    public List<Payment> getPaymentsByStatus(PaymentStatus status) {
-        return paymentRepo.findByPmstatus(status);
-    }
-
+   
     @Override
     public Payment getPaymentById(Integer id) {
         return paymentRepo.findById(id).orElse(null);
     }
 
-	@Override
-	public List<Payment> getAllPayments() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    
+    @Override
+    public List<Payment> getAllPayments() {
+        return paymentRepo.findAll();
+    }
+
+   
+    @Override
+    public List<Payment> getPaymentsByStatus(PaymentStatus status) {
+        return paymentRepo.findByPmstatus(status);
+    }
+
+    
+    @Override
+    public void deletePaymentById(Integer id) {
+        paymentRepo.deleteById(id);
+    }
 }

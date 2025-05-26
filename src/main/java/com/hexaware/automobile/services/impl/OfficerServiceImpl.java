@@ -25,4 +25,22 @@ public class OfficerServiceImpl implements OfficerService {
 		// TODO Auto-generated method stub
 		return Optional.empty();
 	}
+
+	@Override
+	public Officer registerOfficer(Officer officer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<Officer> getAllOfficers() {
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
+
+	@Override
+	public Optional<Officer> getOfficerById(int i) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
 }

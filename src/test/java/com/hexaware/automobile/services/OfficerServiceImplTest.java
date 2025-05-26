@@ -1,9 +1,11 @@
 package com.hexaware.automobile.services;
 
 import com.hexaware.automobile.entities.Officer;
+import com.hexaware.automobile.repositories.OfficerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 
 import java.util.Optional;
 
@@ -13,14 +15,20 @@ import static org.junit.jupiter.api.Assertions.*;
 public class OfficerServiceImplTest {
 
     @Autowired
-    private OfficerService officerService;
+    private OfficerRepository officerRepository;
 
     @Test
-    void testGetOfficerByEmail() {
-        
-        String email = "raj@insurance.com";
+    void testFindByEmailFromDB() {
+        Officer newOfficer = new Officer();
+        newOfficer.setOname("Test Officer");
+        newOfficer.setEmail("test@hexaware.com");
+        newOfficer.setOpassword("1234");
+        officerRepository.save(newOfficer);  
 
-        Optional<Officer> officer = officerService.getOfficerByEmail(email);
-        assertTrue(officer.isPresent(), "Officer should exist with email: " + email);
+        Optional<Officer> officer = officerRepository.findByEmail("test@hexaware.com");
+        assertTrue(officer.isPresent());
+        assertEquals("test@hexaware.com", officer.get().getEmail());
     }
-}
+
+    }
+

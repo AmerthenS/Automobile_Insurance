@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name="quotes")
 public class Quote {
     public Quote() {
 		super();
@@ -73,4 +74,9 @@ public class Quote {
 
     @OneToOne(mappedBy = "quote", cascade = CascadeType.ALL)
     private Payment payment;
+
+	public void setAmount(BigDecimal bigDecimal) {
+		// TODO Auto-generated method stub
+		
+	}
 }
