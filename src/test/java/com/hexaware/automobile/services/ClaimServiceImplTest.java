@@ -1,6 +1,6 @@
 package com.hexaware.automobile.services;
 
-import com.hexaware.automobile.entities.Claim;
+import com.hexaware.automobile.dtos.ClaimDTO;
 import com.hexaware.automobile.entities.ClaimStatus;
 import com.hexaware.automobile.services.impl.ClaimServiceImpl;
 
@@ -21,19 +21,20 @@ public class ClaimServiceImplTest {
     @Test
     public void testGetClaimByIdFromDB() {
         int existingClaimId = 1; 
-        Claim claim = claimService.getClaimById(existingClaimId);
+        ClaimDTO claim = claimService.getClaimById(existingClaimId);
 
         assertNotNull(claim, "Claim with ID " + existingClaimId + " should exist in the database");
+        assertEquals(existingClaimId, claim.getClaimId(), "Claim ID should match");
     }
 
     @Test
     public void testGetClaimsByStatus() {
         ClaimStatus status = ClaimStatus.submitted; 
-        List<Claim> claims = claimService.getClaimsByStatus(status);
+        List<ClaimDTO> claims = claimService.getClaimsByStatus(status);
 
-        assertNotNull(claims);
+        assertNotNull(claims, "Claims list should not be null");
         assertFalse(claims.isEmpty(), "There should be claims with status " + status);
-        for (Claim claim : claims) {
+        for (ClaimDTO claim : claims) {
             assertEquals(status, claim.getCstatus(), "Claim status should match the queried status");
         }
     }
@@ -41,13 +42,12 @@ public class ClaimServiceImplTest {
     @Test
     public void testGetClaimsByUser() {
         int userId = 1; 
-        List<Claim> claims = claimService.getClaimsByUser(userId);
+        List<ClaimDTO> claims = claimService.getClaimsByUser(userId);
 
-        assertNotNull(claims);
+        assertNotNull(claims, "Claims list should not be null");
         assertFalse(claims.isEmpty(), "There should be claims for user id " + userId);
-        for (Claim claim : claims) {
-            assertEquals(userId, claim.getUser().getUserId(), "Claim user id should match the queried user id");
+        for (ClaimDTO claim : claims) {
+            assertEquals(userId, claim.getUserId(), "Claim user id should match the queried user id");
         }
     }
-
 }

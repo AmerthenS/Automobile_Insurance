@@ -1,16 +1,13 @@
 package com.hexaware.automobile.services;
 
-import com.hexaware.automobile.entities.Officer;
+import com.hexaware.automobile.dtos.OfficerDTO;
+import java.util.List;
 import java.util.Optional;
 
 public interface OfficerService {
-    Optional<Officer> loginOfficer(String email, String password);
-
-	Optional<Officer> getOfficerByEmail(String email);
-
-	Officer registerOfficer(Officer officer);
-
-	Optional<Officer> getAllOfficers();
-
-	Optional<Officer> getOfficerById(int i);
+    OfficerDTO registerOfficer(OfficerDTO dto);
+    Optional<OfficerDTO> loginOfficer(String email, String password);
+    Optional<OfficerDTO> getOfficerByEmail(String email);
+    Optional<OfficerDTO> getOfficerById(int id);
+    List<OfficerDTO> getAllOfficers();
 }

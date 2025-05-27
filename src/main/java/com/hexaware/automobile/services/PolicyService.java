@@ -1,11 +1,11 @@
 package com.hexaware.automobile.services;
 
-import com.hexaware.automobile.entities.Policy;
+import com.hexaware.automobile.dtos.PolicyDTO;
 import java.util.List;
 import java.util.Optional;
 
 public interface PolicyService {
-    List<Policy> getAllPolicies();
-    Policy addPolicy(Policy policy);
-	Optional<Policy> getPolicyById(int i);
+    List<PolicyDTO> getAllPolicies();
+    PolicyDTO addPolicy(PolicyDTO policyDTO);
+    Optional<PolicyDTO> getPolicyById(int id);
 }

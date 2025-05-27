@@ -3,6 +3,9 @@ package com.hexaware.automobile.entities;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+
 @Entity
 @Table(name="proposals")
 public class Proposal {
@@ -94,6 +97,7 @@ public class Proposal {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @ManyToOne

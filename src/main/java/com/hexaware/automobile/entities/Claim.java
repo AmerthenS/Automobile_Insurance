@@ -8,12 +8,7 @@ import java.time.LocalDateTime;
 public class Claim {
     public Claim() {
 		super();
-		this.claimId = claimId;
-		this.policy = policy;
-		this.user = user;
-		this.cdescription = cdescription;
-		this.cstatus = cstatus;
-		this.createdAt = createdAt;
+		
 	}
 
 

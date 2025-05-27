@@ -1,5 +1,6 @@
 package com.hexaware.automobile.services.impl;
 
+import com.hexaware.automobile.dtos.OfficerDTO;
 import com.hexaware.automobile.entities.Officer;
 import com.hexaware.automobile.repositories.OfficerRepository;
 import com.hexaware.automobile.services.OfficerService;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OfficerServiceImpl implements OfficerService {
@@ -14,33 +17,41 @@ public class OfficerServiceImpl implements OfficerService {
     @Autowired
     private OfficerRepository officerRepo;
 
-    @Override
-    public Optional<Officer> loginOfficer(String email, String password) {
-        Optional<Officer> officer = officerRepo.findByEmail(email);
-        return officer.filter(o -> o.getOpassword().equals(password)); // Add encoding in real app
+    private OfficerDTO mapToDTO(Officer o) {
+        return new OfficerDTO(o.getOfficerId(), o.getOname(), o.getEmail(), o.getOpassword());
     }
 
-	@Override
-	public Optional<Officer> getOfficerByEmail(String email) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
+    private Officer mapToEntity(OfficerDTO dto) {
+        return new Officer(dto.getOfficerId(), dto.getOname(), dto.getEmail(), dto.getOpassword());
+    }
 
-	@Override
-	public Officer registerOfficer(Officer officer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public OfficerDTO registerOfficer(OfficerDTO dto) {
+        Officer saved = officerRepo.save(mapToEntity(dto));
+        return mapToDTO(saved);
+    }
 
-	@Override
-	public Optional<Officer> getAllOfficers() {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
+    @Override
+    public Optional<OfficerDTO> loginOfficer(String email, String password) {
+        return officerRepo.findByEmail(email)
+                .filter(o -> o.getOpassword().equals(password))
+                .map(this::mapToDTO);
+    }
 
-	@Override
-	public Optional<Officer> getOfficerById(int i) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
+    @Override
+    public Optional<OfficerDTO> getOfficerByEmail(String email) {
+        return officerRepo.findByEmail(email).map(this::mapToDTO);
+    }
+
+    @Override
+    public Optional<OfficerDTO> getOfficerById(int id) {
+        return officerRepo.findById(id).map(this::mapToDTO);
+    }
+
+    @Override
+    public List<OfficerDTO> getAllOfficers() {
+        return officerRepo.findAll().stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
 }
