@@ -1,130 +1,103 @@
 package com.hexaware.automobile.services.impl;
 
 import com.hexaware.automobile.dtos.ProposalDTO;
-import com.hexaware.automobile.entities.Policy;
 import com.hexaware.automobile.entities.Proposal;
-import com.hexaware.automobile.entities.ProposalStatus;
-import com.hexaware.automobile.entities.Quote;
 import com.hexaware.automobile.entities.User;
-import com.hexaware.automobile.repositories.PolicyRepository;
 import com.hexaware.automobile.repositories.ProposalRepository;
-import com.hexaware.automobile.repositories.QuoteRepository;
 import com.hexaware.automobile.repositories.UserRepository;
 import com.hexaware.automobile.services.ProposalService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProposalServiceImpl implements ProposalService {
 
-    @Autowired
-    private ProposalRepository proposalRepo;
+    private static final Logger logger = LoggerFactory.getLogger(ProposalServiceImpl.class);
 
-    @Autowired
-    private UserRepository userRepo;
+    private final ProposalRepository proposalRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PolicyRepository policyRepo;
-
-    @Autowired
-    private QuoteRepository quoteRepo;
-
-    private ProposalDTO convertToDto(Proposal proposal) {
-        return new ProposalDTO(
-            proposal.getProposalId(),
-            proposal.getUser() != null ? proposal.getUser().getUserId() : null,
-            proposal.getPolicy() != null ? proposal.getPolicy().getPolicyId() : null,
-            proposal.getVehicleType(),
-            proposal.getVehicleModel(),
-            proposal.getPrstatus() != null ? proposal.getPrstatus().name() : null,
-            proposal.getCreatedAt(),
-            proposal.getQuote() != null ? proposal.getQuote().getQuoteId() : null
-        );
+    public ProposalServiceImpl(ProposalRepository proposalRepository, UserRepository userRepository) {
+        this.proposalRepository = proposalRepository;
+        this.userRepository = userRepository;
     }
 
-    private Proposal convertToEntity(ProposalDTO dto) {
+    @Override
+    public Proposal createProposal(ProposalDTO dto) {
+        logger.info("Creating proposal with ID {}", dto.getId());
+
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id " + dto.getUserId()));
+
+        Proposal proposal = mapDtoToEntity(dto, user);
+
+        proposal.setCreatedAt(LocalDateTime.now());
+        proposal.setUpdatedAt(LocalDateTime.now());
+
+        Proposal saved = proposalRepository.save(proposal);
+        logger.info("Proposal created successfully with ID {}", saved.getId());
+        return saved;
+    }
+
+    @Override
+    public Proposal getProposalById(Long id) {
+        logger.info("Fetching proposal by ID {}", id);
+        return proposalRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Proposal not found with id " + id));
+    }
+
+    @Override
+    public Proposal updateProposal(Long id, ProposalDTO dto) {
+        logger.info("Updating proposal with ID {}", id);
+        Proposal existing = proposalRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Proposal not found with id " + id));
+
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id " + dto.getUserId()));
+
+        // Update fields
+        existing.setUser(user);
+        existing.setVehicleType(dto.getVehicleType());
+        existing.setStatus(Proposal.Status.valueOf(dto.getStatus()));
+        existing.setUpdatedAt(LocalDateTime.now());
+
+        Proposal updated = proposalRepository.save(existing);
+        logger.info("Proposal updated successfully with ID {}", updated.getId());
+        return updated;
+    }
+
+    @Override
+    public void deleteProposal(Long id) {
+        logger.info("Deleting proposal with ID {}", id);
+        proposalRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Proposal> getAllProposals() {
+        logger.info("Fetching all proposals");
+        return proposalRepository.findAll();
+    }
+
+    @Override
+    public List<Proposal> getProposalsByUserId(Long userId) {
+        logger.info("Fetching proposals for user ID {}", userId);
+        return proposalRepository.findByUserId(userId);
+    }
+
+    // Helper method to map DTO to Entity
+    private Proposal mapDtoToEntity(ProposalDTO dto, User user) {
         Proposal proposal = new Proposal();
-
-        proposal.setProposalId(dto.getProposalId());
-
-        if (dto.getUserId() != null) {
-            Optional<User> userOpt = userRepo.findById(dto.getUserId());
-            userOpt.ifPresent(proposal::setUser);
-        }
-
-        if (dto.getPolicyId() != null) {
-            Optional<Policy> policyOpt = policyRepo.findById(dto.getPolicyId());
-            policyOpt.ifPresent(proposal::setPolicy);
-        }
-
+        proposal.setId(dto.getId());
+        proposal.setUser(user);
         proposal.setVehicleType(dto.getVehicleType());
-        proposal.setVehicleModel(dto.getVehicleModel());
-
-        if (dto.getPrstatus() != null) {
-            proposal.setPrstatus(ProposalStatus.valueOf(dto.getPrstatus()));
-        }
-
-        // createdAt: You may keep as is or allow it to be set from DTO if needed
-
-        if (dto.getQuoteId() != null) {
-            Optional<Quote> quoteOpt = quoteRepo.findById(dto.getQuoteId());
-            quoteOpt.ifPresent(proposal::setQuote);
-        }
-
+        proposal.setStatus(dto.getStatus() != null ? Proposal.Status.valueOf(dto.getStatus()) : Proposal.Status.SUBMITTED);
+        proposal.setCreatedAt(dto.getCreatedAt());
+        proposal.setUpdatedAt(dto.getUpdatedAt());
         return proposal;
-    }
-
-    @Override
-    public ProposalDTO submitProposal(ProposalDTO proposalDto) {
-        Proposal saved = proposalRepo.save(convertToEntity(proposalDto));
-        return convertToDto(saved);
-    }
-
-    @Override
-    public List<ProposalDTO> getUserProposals(Integer userId) {
-        List<Proposal> proposals = proposalRepo.findByUser_UserId(userId);
-        return proposals.stream().map(this::convertToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ProposalDTO> getAllProposals() {
-        List<Proposal> proposals = proposalRepo.findAll();
-        return proposals.stream().map(this::convertToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public Optional<ProposalDTO> getProposalById(Integer id) {
-        return proposalRepo.findById(id).map(this::convertToDto);
-    }
-
-    @Override
-    public ProposalDTO updateProposal(Integer id, ProposalDTO proposalDto) {
-        Proposal updated = proposalRepo.findById(id).map(existing -> {
-            if (proposalDto.getUserId() != null) {
-                userRepo.findById(proposalDto.getUserId()).ifPresent(existing::setUser);
-            }
-            if (proposalDto.getPolicyId() != null) {
-                policyRepo.findById(proposalDto.getPolicyId()).ifPresent(existing::setPolicy);
-            }
-            existing.setVehicleModel(proposalDto.getVehicleModel());
-            existing.setVehicleType(proposalDto.getVehicleType());
-            if (proposalDto.getPrstatus() != null) {
-                existing.setPrstatus(ProposalStatus.valueOf(proposalDto.getPrstatus()));
-            }
-            if (proposalDto.getQuoteId() != null) {
-                quoteRepo.findById(proposalDto.getQuoteId()).ifPresent(existing::setQuote);
-            }
-            return proposalRepo.save(existing);
-        }).orElseThrow(() -> new RuntimeException("Proposal not found with id " + id));
-        return convertToDto(updated);
-    }
-
-    @Override
-    public void deleteProposal(Integer id) {
-        proposalRepo.deleteById(id);
     }
 }

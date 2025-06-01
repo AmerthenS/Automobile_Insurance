@@ -1,12 +1,13 @@
 package com.hexaware.automobile.services;
 
-import com.hexaware.automobile.entities.Quote;
-
+import com.hexaware.automobile.dtos.QuoteDTO;
 import java.util.List;
 
 public interface QuoteService {
-    Quote generateQuote(Quote quote);
-    Quote getQuoteById(Integer id);
-    Quote getQuoteByProposalId(Integer proposalId);
-    List<Quote> getAllQuotes();
+    QuoteDTO createQuote(QuoteDTO quoteDTO);
+    QuoteDTO getQuoteById(Long id);
+    QuoteDTO getQuoteByProposalId(Long proposalId);
+    List<QuoteDTO> getAllQuotes();
+    QuoteDTO updateQuote(Long id, QuoteDTO quoteDTO);
+    void deleteQuote(Long id);
 }

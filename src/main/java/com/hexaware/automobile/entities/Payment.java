@@ -1,33 +1,45 @@
 package com.hexaware.automobile.entities;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="payments")
+@Table(name = "payments")
 public class Payment {
-    public Payment() {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "quote_id", unique = true)
+    private Quote quote;
+
+    @Column(name = "payment_status")
+    private Boolean paymentStatus = false;
+
+    @Column(name = "paid_on")
+    private LocalDateTime paidOn;
+
+	public Payment(Long id, Quote quote, Boolean paymentStatus, LocalDateTime paidOn) {
+		super();
+		this.id = id;
+		this.quote = quote;
+		this.paymentStatus = paymentStatus;
+		this.paidOn = paidOn;
+	}
+
+	public Payment() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Payment(Integer paymentId, Quote quote, LocalDateTime paidAt, BigDecimal amountPaid,
-			PaymentStatus pmstatus) {
-		super();
-		this.paymentId = paymentId;
-		this.quote = quote;
-		this.paidAt = paidAt;
-		this.amountPaid = amountPaid;
-		this.pmstatus = pmstatus;
+	public Long getId() {
+		return id;
 	}
 
-	public Integer getPaymentId() {
-		return paymentId;
-	}
-
-	public void setPaymentId(Integer paymentId) {
-		this.paymentId = paymentId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Quote getQuote() {
@@ -38,41 +50,21 @@ public class Payment {
 		this.quote = quote;
 	}
 
-	public LocalDateTime getPaidAt() {
-		return paidAt;
+	public Boolean getPaymentStatus() {
+		return paymentStatus;
 	}
 
-	public void setPaidAt(LocalDateTime paidAt) {
-		this.paidAt = paidAt;
+	public void setPaymentStatus(Boolean paymentStatus) {
+		this.paymentStatus = paymentStatus;
 	}
 
-	public BigDecimal getAmountPaid() {
-		return amountPaid;
+	public LocalDateTime getPaidOn() {
+		return paidOn;
 	}
 
-	public void setAmountPaid(BigDecimal amountPaid) {
-		this.amountPaid = amountPaid;
+	public void setPaidOn(LocalDateTime paidOn) {
+		this.paidOn = paidOn;
 	}
 
-	public PaymentStatus getPmstatus() {
-		return pmstatus;
-	}
-
-	public void setPmstatus(PaymentStatus pmstatus) {
-		this.pmstatus = pmstatus;
-	}
-
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer paymentId;
-
-    @OneToOne
-    @JoinColumn(name = "quote_id")
-    private Quote quote;
-
-    private LocalDateTime paidAt = LocalDateTime.now();
-    private BigDecimal amountPaid;
-
-    @Enumerated(EnumType.STRING)
-    private PaymentStatus pmstatus = PaymentStatus.pending;
+    
 }

@@ -1,62 +1,89 @@
 package com.hexaware.automobile.dtos;
 
-import java.math.BigDecimal;
+import jakarta.validation.constraints.*;
+import java.time.LocalDate;
 
 public class PolicyDTO {
 
-    private Integer policyId;
-    private String pname;
-    private String pdescription;
-    private BigDecimal basePremium;
-    private String ptype;
+   
+    private Long id;
 
-    public PolicyDTO() {}
+    @NotNull(message = "Proposal ID is mandatory")
+    private Long proposalId;
 
-    public PolicyDTO(Integer policyId, String pname, String pdescription, BigDecimal basePremium, String ptype) {
-        this.policyId = policyId;
-        this.pname = pname;
-        this.pdescription = pdescription;
-        this.basePremium = basePremium;
-        this.ptype = ptype;
+    @NotBlank(message = "Policy number is mandatory")
+    @Size(max = 100)
+    private String policyNumber;
+
+    @NotNull(message = "Start date is mandatory")
+    private LocalDate startDate;
+
+    @NotNull(message = "End date is mandatory")
+    private LocalDate endDate;
+
+    @Size(max = 255)
+    private String pdfUrl;
+
+    @Pattern(regexp = "ACTIVE|EXPIRED|CANCELLED", message = "Invalid status")
+    private String status;
+
+   
+
+    public Long getId() {
+        return id;
     }
 
-    public Integer getPolicyId() {
-        return policyId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setPolicyId(Integer policyId) {
-        this.policyId = policyId;
+    public Long getProposalId() {
+        return proposalId;
     }
 
-    public String getPname() {
-        return pname;
+    public void setProposalId(Long proposalId) {
+        this.proposalId = proposalId;
     }
 
-    public void setPname(String pname) {
-        this.pname = pname;
+    public String getPolicyNumber() {
+        return policyNumber;
     }
 
-    public String getPdescription() {
-        return pdescription;
+    public void setPolicyNumber(String policyNumber) {
+        this.policyNumber = policyNumber;
     }
 
-    public void setPdescription(String pdescription) {
-        this.pdescription = pdescription;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public BigDecimal getBasePremium() {
-        return basePremium;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public void setBasePremium(BigDecimal basePremium) {
-        this.basePremium = basePremium;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public String getPtype() {
-        return ptype;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
-    public void setPtype(String ptype) {
-        this.ptype = ptype;
+    public String getPdfUrl() {
+        return pdfUrl;
     }
+
+    public void setPdfUrl(String pdfUrl) {
+        this.pdfUrl = pdfUrl;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
 }

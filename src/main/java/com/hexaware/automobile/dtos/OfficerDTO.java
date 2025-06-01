@@ -1,29 +1,89 @@
 package com.hexaware.automobile.dtos;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class OfficerDTO {
-    private Integer officerId;
-    private String oname;
+
+    private Long officerId;
+
+    
+
+    @NotBlank(message = "Password is mandatory")
+    @Size(min = 6, message = "Password must be at least 6 characters")
+    private String password;
+
+    @NotBlank(message = "Role is mandatory")
+    private String role;
+
+    @NotBlank(message = "Name is mandatory")
+    private String name;
+
+    @Email(message = "Invalid email format")
+    @NotBlank(message = "Email is mandatory")
     private String email;
-    private String opassword;
 
-    public OfficerDTO() {}
+   
 
-    public OfficerDTO(Integer officerId, String oname, String email, String opassword) {
-        this.officerId = officerId;
-        this.oname = oname;
-        this.email = email;
-        this.opassword = opassword;
+    // JWT token for authentication responses
+    private String jwtToken;
+
+    public Long getOfficerId() {
+        return officerId;
     }
 
-    public Integer getOfficerId() { return officerId; }
-    public void setOfficerId(Integer officerId) { this.officerId = officerId; }
+    public void setOfficerId(Long officerId) {
+        this.officerId = officerId;
+    }
 
-    public String getOname() { return oname; }
-    public void setOname(String oname) { this.oname = oname; }
+   
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getPassword() {
+        return password;
+    }
 
-    public String getOpassword() { return opassword; }
-    public void setOpassword(String opassword) { this.opassword = opassword; }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    
+
+    public String getJwtToken() {
+        return jwtToken;
+    }
+
+    public void setJwtToken(String jwtToken) {
+        this.jwtToken = jwtToken;
+    }
 }

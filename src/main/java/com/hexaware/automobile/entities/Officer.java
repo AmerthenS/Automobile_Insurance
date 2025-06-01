@@ -1,5 +1,7 @@
 package com.hexaware.automobile.entities;
 
+import com.hexaware.automobile.entities.User.Role;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -8,59 +10,77 @@ public class Officer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "officer_id")
-    private Integer officerId;
+    private Long id;
 
-    @Column(name = "oname")
-    private String oname;
+    @Column(nullable = false)
+    private String name;
 
-    @Column(name = "email", unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(name = "opassword")
-    private String opassword;
+    @Column(nullable = false)
+    private String password;
 
-    // Default constructor
-    public Officer() {}
+    @Enumerated(EnumType.STRING)
+    private User.Role role = User.Role.ROLE_OFFICER;
+    
+    
 
-    // Parameterized constructor
-    public Officer(Integer officerId, String oname, String email, String opassword) {
-        this.officerId = officerId;
-        this.oname = oname;
-        this.email = email;
-        this.opassword = opassword;
-    }
+	public Officer(Long id, String name, String email, String password, Role role) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+	}
+	
 
-    // Getters and Setters
-    public Integer getOfficerId() {
-        return officerId;
-    }
+	public Officer() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-    public void setOfficerId(Integer officerId) {
-        this.officerId = officerId;
-    }
 
-    public String getOname() {
-        return oname;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setOname(String oname) {
-        this.oname = oname;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getOpassword() {
-        return opassword;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setOpassword(String opassword) {
-        this.opassword = opassword;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public User.Role getRole() {
+		return role;
+	}
+
+	public void setRole(User.Role role) {
+		this.role = role;
+	}
+
+    
 }

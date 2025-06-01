@@ -1,63 +1,55 @@
 package com.hexaware.automobile.dtos;
 
+import jakarta.validation.constraints.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class QuoteDTO {
 
-    private Integer quoteId;
-    private Integer proposalId;
-    private BigDecimal premiumAmount;
-    private LocalDateTime sentAt;
-    private Integer paymentId;
+    
+    private Long id;
 
-    public QuoteDTO() {}
+    @NotNull(message = "Proposal ID is mandatory")
+    private Long proposalId;
 
-    public QuoteDTO(Integer quoteId, Integer proposalId, BigDecimal premiumAmount, LocalDateTime sentAt, Integer paymentId) {
-        this.quoteId = quoteId;
-        this.proposalId = proposalId;
-        this.premiumAmount = premiumAmount;
-        this.sentAt = sentAt;
-        this.paymentId = paymentId;
-    }
+    @NotNull(message = "Amount is mandatory")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Amount must be positive")
+    private BigDecimal amount;
 
-    public Integer getQuoteId() {
-        return quoteId;
-    }
+    private LocalDateTime generatedOn;
 
-    public void setQuoteId(Integer quoteId) {
-        this.quoteId = quoteId;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Integer getProposalId() {
-        return proposalId;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setProposalId(Integer proposalId) {
-        this.proposalId = proposalId;
-    }
+	public Long getProposalId() {
+		return proposalId;
+	}
 
-    public BigDecimal getPremiumAmount() {
-        return premiumAmount;
-    }
+	public void setProposalId(Long proposalId) {
+		this.proposalId = proposalId;
+	}
 
-    public void setPremiumAmount(BigDecimal premiumAmount) {
-        this.premiumAmount = premiumAmount;
-    }
+	public BigDecimal getAmount() {
+		return amount;
+	}
 
-    public LocalDateTime getSentAt() {
-        return sentAt;
-    }
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
 
-    public void setSentAt(LocalDateTime sentAt) {
-        this.sentAt = sentAt;
-    }
+	public LocalDateTime getGeneratedOn() {
+		return generatedOn;
+	}
 
-    public Integer getPaymentId() {
-        return paymentId;
-    }
+	public void setGeneratedOn(LocalDateTime generatedOn) {
+		this.generatedOn = generatedOn;
+	}
 
-    public void setPaymentId(Integer paymentId) {
-        this.paymentId = paymentId;
-    }
+    
 }

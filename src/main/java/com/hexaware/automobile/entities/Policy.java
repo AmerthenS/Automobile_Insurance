@@ -1,101 +1,115 @@
 package com.hexaware.automobile.entities;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
-import java.util.List;
+
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "policies")
 public class Policy {
-    public Policy() {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "proposal_id", unique = true)
+    private Proposal proposal;
+
+    @Column(name = "policy_number", unique = true)
+    private String policyNumber;
+
+    @Column(name = "start_date")
+    private LocalDate startDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
+
+    @Column(name = "pdf_url")
+    private String pdfUrl;
+
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.ACTIVE;
+
+    public enum Status {
+        ACTIVE,
+        EXPIRED,
+        CANCELLED
+    }
+
+	public Policy(Long id, Proposal proposal, String policyNumber, LocalDate startDate, LocalDate endDate,
+			String pdfUrl, Status status) {
+		super();
+		this.id = id;
+		this.proposal = proposal;
+		this.policyNumber = policyNumber;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.pdfUrl = pdfUrl;
+		this.status = status;
+	}
+
+	public Policy() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Policy(Integer policyId, String pname, String pdescription, BigDecimal basePremium, String ptype,
-			List<Proposal> proposals, List<Claim> claims) {
-		super();
-		this.policyId = policyId;
-		this.pname = pname;
-		this.pdescription = pdescription;
-		this.basePremium = basePremium;
-		this.ptype = ptype;
-		this.proposals = proposals;
-		this.claims = claims;
+	public Long getId() {
+		return id;
 	}
 
-	public Integer getPolicyId() {
-		return policyId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setPolicyId(Integer policyId) {
-		this.policyId = policyId;
+	public Proposal getProposal() {
+		return proposal;
 	}
 
-	public String getPname() {
-		return pname;
+	public void setProposal(Proposal proposal) {
+		this.proposal = proposal;
 	}
 
-	public void setPname(String pname) {
-		this.pname = pname;
+	public String getPolicyNumber() {
+		return policyNumber;
 	}
 
-	public String getPdescription() {
-		return pdescription;
+	public void setPolicyNumber(String policyNumber) {
+		this.policyNumber = policyNumber;
 	}
 
-	public void setPdescription(String pdescription) {
-		this.pdescription = pdescription;
+	public LocalDate getStartDate() {
+		return startDate;
 	}
 
-	public BigDecimal getBasePremium() {
-		return basePremium;
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
 	}
 
-	public void setBasePremium(BigDecimal basePremium) {
-		this.basePremium = basePremium;
+	public LocalDate getEndDate() {
+		return endDate;
 	}
 
-	public String getPtype() {
-		return ptype;
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
 	}
 
-	public void setPtype(String ptype) {
-		this.ptype = ptype;
+	public String getPdfUrl() {
+		return pdfUrl;
 	}
 
-	public List<Proposal> getProposals() {
-		return proposals;
+	public void setPdfUrl(String pdfUrl) {
+		this.pdfUrl = pdfUrl;
 	}
 
-	public void setProposals(List<Proposal> proposals) {
-		this.proposals = proposals;
+	public Status getStatus() {
+		return status;
 	}
 
-	public List<Claim> getClaims() {
-		return claims;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
-	public void setClaims(List<Claim> claims) {
-		this.claims = claims;
-	}
-
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer policyId;
-
-    private String pname;
-
-    @Column(columnDefinition = "TEXT")
-    private String pdescription;
-
-    private BigDecimal basePremium;
-
-    private String ptype;
-
-    @OneToMany(mappedBy = "policy", cascade = CascadeType.ALL)
-    private List<Proposal> proposals;
-
-    @OneToMany(mappedBy = "policy", cascade = CascadeType.ALL)
-    private List<Claim> claims;
+    
 }

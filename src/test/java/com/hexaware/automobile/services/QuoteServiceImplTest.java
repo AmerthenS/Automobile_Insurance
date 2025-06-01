@@ -1,51 +1,154 @@
 package com.hexaware.automobile.services;
 
-import com.hexaware.automobile.entities.*;
-import com.hexaware.automobile.repositories.*;
+import com.hexaware.automobile.dtos.QuoteDTO;
+import com.hexaware.automobile.entities.Proposal;
+import com.hexaware.automobile.entities.Quote;
+import com.hexaware.automobile.exceptions.ResourceNotFoundException;
+import com.hexaware.automobile.repositories.ProposalRepository;
+import com.hexaware.automobile.repositories.QuoteRepository;
+import com.hexaware.automobile.services.impl.QuoteServiceImpl;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
-public class QuoteServiceImplTest {
+class QuoteServiceImplTest {
 
-    @Autowired
+    @InjectMocks
+    private QuoteServiceImpl quoteService;
+
+    @Mock
     private QuoteRepository quoteRepository;
 
-    @Autowired
+    @Mock
     private ProposalRepository proposalRepository;
 
+    private Quote quote;
+    private QuoteDTO quoteDTO;
+    private Proposal proposal;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+
+        proposal = new Proposal();
+        proposal.setId(1L);
+
+        quote = new Quote(100L, proposal, new BigDecimal("5000.00"), LocalDateTime.now());
+
+        quoteDTO = new QuoteDTO();
+        quoteDTO.setId(100L);
+        quoteDTO.setProposalId(1L);
+        quoteDTO.setAmount(new BigDecimal("5000.00"));
+        quoteDTO.setGeneratedOn(LocalDateTime.now());
+    }
+
     @Test
-    public void testCreateReadUpdateQuote() {
-        
-        Proposal proposal = proposalRepository.findById(1).orElse(null);
-        assertNotNull(proposal, "Proposal with ID 1 must exist for this test to pass");
+    void testCreateQuote() {
+        when(proposalRepository.findById(1L)).thenReturn(Optional.of(proposal));
+        when(quoteRepository.save(any(Quote.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-       
+        QuoteDTO created = quoteService.createQuote(quoteDTO);
+
+        assertNotNull(created);
+        assertEquals(quoteDTO.getAmount(), created.getAmount());
+        verify(quoteRepository, times(1)).save(any(Quote.class));
+    }
+
+    @Test
+    void testGetQuoteById_Success() {
+        when(quoteRepository.findById(100L)).thenReturn(Optional.of(quote));
+
+        QuoteDTO result = quoteService.getQuoteById(100L);
+
+        assertNotNull(result);
+        assertEquals(100L, result.getId());
+    }
+
+    @Test
+    void testGetQuoteById_NotFound() {
+        when(quoteRepository.findById(200L)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> quoteService.getQuoteById(200L));
+    }
+
+    @Test
+    void testGetQuoteByProposalId_Success() {
+        Long proposalId = 1L;
         Quote quote = new Quote();
+        quote.setId(100L);
+        quote.setAmount(BigDecimal.valueOf(5000));
+        quote.setGeneratedOn(LocalDateTime.now());
+        
+        Proposal proposal = new Proposal();
+        proposal.setId(proposalId);
         quote.setProposal(proposal);
-        quote.setPremiumAmount(new BigDecimal("2500.00"));
-        quote.setSentAt(LocalDateTime.now());
 
-        
-        Quote savedQuote = quoteRepository.save(quote);
-        assertNotNull(savedQuote);
-        assertNotNull(savedQuote.getQuoteId(), "Quote ID should be auto-generated");
+        when(quoteRepository.findByProposalId(proposalId)).thenReturn(Optional.of(quote));
 
-        
-        Optional<Quote> retrieved = quoteRepository.findById(savedQuote.getQuoteId());
-        assertTrue(retrieved.isPresent(), "Saved quote should be found in DB");
-        assertEquals(proposal.getProposalId(), retrieved.get().getProposal().getProposalId());
+        QuoteDTO result = quoteService.getQuoteByProposalId(proposalId);
 
-        
-        retrieved.get().setPremiumAmount(new BigDecimal("2700.00"));
-        Quote updated = quoteRepository.save(retrieved.get());
-        assertEquals(new BigDecimal("2700.00"), updated.getPremiumAmount(), "Premium amount should be updated");
+        assertNotNull(result);
+        assertEquals(100L, result.getId());
+        assertEquals(proposalId, result.getProposalId());
+    }
+
+
+    @Test
+    void testGetQuoteByProposalId_NotFound() {
+        when(proposalRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> quoteService.getQuoteByProposalId(1L));
+    }
+
+    @Test
+    void testGetAllQuotes() {
+        when(quoteRepository.findAll()).thenReturn(Collections.singletonList(quote));
+
+        List<QuoteDTO> all = quoteService.getAllQuotes();
+
+        assertEquals(1, all.size());
+    }
+
+    @Test
+    void testUpdateQuote_Success() {
+        when(quoteRepository.findById(100L)).thenReturn(Optional.of(quote));
+        when(proposalRepository.findById(1L)).thenReturn(Optional.of(proposal));
+        when(quoteRepository.save(any(Quote.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        QuoteDTO updated = quoteService.updateQuote(100L, quoteDTO);
+
+        assertNotNull(updated);
+        assertEquals(quoteDTO.getAmount(), updated.getAmount());
+    }
+
+    @Test
+    void testUpdateQuote_NotFound() {
+        when(quoteRepository.findById(100L)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> quoteService.updateQuote(100L, quoteDTO));
+    }
+
+    @Test
+    void testDeleteQuote_Success() {
+        when(quoteRepository.findById(100L)).thenReturn(Optional.of(quote));
+
+        quoteService.deleteQuote(100L);
+
+        verify(quoteRepository, times(1)).delete(quote);
+    }
+
+    @Test
+    void testDeleteQuote_NotFound() {
+        when(quoteRepository.findById(100L)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> quoteService.deleteQuote(100L));
     }
 }

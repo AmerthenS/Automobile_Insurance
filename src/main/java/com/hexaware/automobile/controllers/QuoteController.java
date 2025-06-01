@@ -1,8 +1,16 @@
 package com.hexaware.automobile.controllers;
 
-import com.hexaware.automobile.entities.Quote;
-import com.hexaware.automobile.repositories.QuoteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.hexaware.automobile.dtos.QuoteDTO;
+import com.hexaware.automobile.services.QuoteService;
+
+import jakarta.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,42 +19,61 @@ import java.util.List;
 @RequestMapping("/api/quotes")
 public class QuoteController {
 
-    @Autowired
-    private QuoteRepository quoteRepository;
+    private static final Logger logger = LoggerFactory.getLogger(QuoteController.class);
 
-    // Create
+    private final QuoteService quoteService;
+
+    public QuoteController(QuoteService quoteService) {
+        this.quoteService = quoteService;
+    }
+
+    
     @PostMapping
-    public Quote createQuote(@RequestBody Quote quote) {
-        return quoteRepository.save(quote);
+    @PreAuthorize("hasRole('OFFICER')")
+    public ResponseEntity<QuoteDTO> createQuote(@Valid @RequestBody QuoteDTO quoteDTO) {
+        logger.info("Received request to create quote for proposalId {}", quoteDTO.getProposalId());
+        QuoteDTO created = quoteService.createQuote(quoteDTO);
+        return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
-    // Read all
-    @GetMapping
-    public List<Quote> getAllQuotes() {
-        return quoteRepository.findAll();
-    }
-
-    // Read by ID
+    
     @GetMapping("/{id}")
-    public Quote getQuoteById(@PathVariable Integer id) {
-        return quoteRepository.findById(id).orElse(null);
+    @PreAuthorize("hasAnyRole('USER', 'OFFICER')")
+    public ResponseEntity<QuoteDTO> getQuoteById(@PathVariable Long id) {
+        logger.info("Fetching quote by ID {}", id);
+        return ResponseEntity.ok(quoteService.getQuoteById(id));
     }
 
-    // Update
+  
+    @GetMapping("/proposal/{proposalId}")
+    @PreAuthorize("hasAnyRole('USER', 'OFFICER')")
+    public ResponseEntity<QuoteDTO> getQuoteByProposalId(@PathVariable Long proposalId) {
+        logger.info("Fetching quote for proposalId {}", proposalId);
+        return ResponseEntity.ok(quoteService.getQuoteByProposalId(proposalId));
+    }
+
+  
+    @GetMapping
+    @PreAuthorize("hasRole('OFFICER')")
+    public ResponseEntity<List<QuoteDTO>> getAllQuotes() {
+        logger.info("Fetching all quotes");
+        return ResponseEntity.ok(quoteService.getAllQuotes());
+    }
+
+    
     @PutMapping("/{id}")
-    public Quote updateQuote(@PathVariable Integer id, @RequestBody Quote updatedQuote) {
-        return quoteRepository.findById(id).map(quote -> {
-            quote.setProposal(updatedQuote.getProposal());
-            quote.setPremiumAmount(updatedQuote.getPremiumAmount());
-            quote.setSentAt(updatedQuote.getSentAt());
-            quote.setPayment(updatedQuote.getPayment());
-            return quoteRepository.save(quote);
-        }).orElse(null);
+    @PreAuthorize("hasRole('OFFICER')")
+    public ResponseEntity<QuoteDTO> updateQuote(@PathVariable Long id, @Valid @RequestBody QuoteDTO quoteDTO) {
+        logger.info("Updating quote with id {}", id);
+        return ResponseEntity.ok(quoteService.updateQuote(id, quoteDTO));
     }
 
-    // Delete
+   
     @DeleteMapping("/{id}")
-    public void deleteQuote(@PathVariable Integer id) {
-        quoteRepository.deleteById(id);
+    @PreAuthorize("hasRole('OFFICER')")
+    public ResponseEntity<Void> deleteQuote(@PathVariable Long id) {
+        logger.info("Deleting quote with id {}", id);
+        quoteService.deleteQuote(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

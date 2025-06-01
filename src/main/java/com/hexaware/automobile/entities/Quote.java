@@ -5,28 +5,41 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="quotes")
+@Table(name = "quotes")
 public class Quote {
-    public Quote() {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "proposal_id", unique = true)
+    private Proposal proposal;
+
+    private BigDecimal amount;
+
+    @Column(name = "generated_on")
+    private LocalDateTime generatedOn;
+
+	public Quote(Long id, Proposal proposal, BigDecimal amount, LocalDateTime generatedOn) {
+		super();
+		this.id = id;
+		this.proposal = proposal;
+		this.amount = amount;
+		this.generatedOn = generatedOn;
+	}
+
+	public Quote() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Quote(Integer quoteId, Proposal proposal, BigDecimal premiumAmount, LocalDateTime sentAt, Payment payment) {
-		super();
-		this.quoteId = quoteId;
-		this.proposal = proposal;
-		this.premiumAmount = premiumAmount;
-		this.sentAt = sentAt;
-		this.payment = payment;
+	public Long getId() {
+		return id;
 	}
 
-	public Integer getQuoteId() {
-		return quoteId;
-	}
-
-	public void setQuoteId(Integer quoteId) {
-		this.quoteId = quoteId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Proposal getProposal() {
@@ -37,46 +50,21 @@ public class Quote {
 		this.proposal = proposal;
 	}
 
-	public BigDecimal getPremiumAmount() {
-		return premiumAmount;
+	public BigDecimal getAmount() {
+		return amount;
 	}
 
-	public void setPremiumAmount(BigDecimal premiumAmount) {
-		this.premiumAmount = premiumAmount;
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
 	}
 
-	public LocalDateTime getSentAt() {
-		return sentAt;
+	public LocalDateTime getGeneratedOn() {
+		return generatedOn;
 	}
 
-	public void setSentAt(LocalDateTime sentAt) {
-		this.sentAt = sentAt;
+	public void setGeneratedOn(LocalDateTime generatedOn) {
+		this.generatedOn = generatedOn;
 	}
 
-	public Payment getPayment() {
-		return payment;
-	}
-
-	public void setPayment(Payment payment) {
-		this.payment = payment;
-	}
-
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer quoteId;
-
-    @OneToOne
-    @JoinColumn(name = "proposal_id")
-    private Proposal proposal;
-
-    private BigDecimal premiumAmount;
-    private LocalDateTime sentAt = LocalDateTime.now();
-
-    @OneToOne(mappedBy = "quote", cascade = CascadeType.ALL)
-    private Payment payment;
-
-	public void setAmount(BigDecimal bigDecimal) {
-		// TODO Auto-generated method stub
-		
-	}
+    
 }

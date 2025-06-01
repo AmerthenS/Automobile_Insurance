@@ -1,54 +1,75 @@
 package com.hexaware.automobile.dtos;
 
+import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 
 public class ProposalDTO {
-    private Integer proposalId;
-    private Integer userId;       // reference to User
-    private Integer policyId;     // reference to Policy
+
+   
+    private Long id;
+
+    @NotNull(message = "User ID is mandatory")
+    private Long userId;
+
+    @NotBlank(message = "Vehicle type is mandatory")
+    @Size(max = 50)
     private String vehicleType;
-    private String vehicleModel;
-    private String prstatus;      // enum as String
+
+    @Pattern(regexp = "SUBMITTED|DOCUMENTS_REQUESTED|QUOTE_GENERATED|PAYMENT_PENDING|ACTIVE|REJECTED|EXPIRED",
+             message = "Invalid status")
+    private String status;
+
     private LocalDateTime createdAt;
-    private Integer quoteId;      // reference to Quote
 
-    public ProposalDTO() {}
+    private LocalDateTime updatedAt;
 
-    public ProposalDTO(Integer proposalId, Integer userId, Integer policyId, String vehicleType, String vehicleModel,
-                       String prstatus, LocalDateTime createdAt, Integer quoteId) {
-        this.proposalId = proposalId;
-        this.userId = userId;
-        this.policyId = policyId;
-        this.vehicleType = vehicleType;
-        this.vehicleModel = vehicleModel;
-        this.prstatus = prstatus;
-        this.createdAt = createdAt;
-        this.quoteId = quoteId;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    // Getters and Setters
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Integer getProposalId() { return proposalId; }
-    public void setProposalId(Integer proposalId) { this.proposalId = proposalId; }
+	public Long getUserId() {
+		return userId;
+	}
 
-    public Integer getUserId() { return userId; }
-    public void setUserId(Integer userId) { this.userId = userId; }
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
-    public Integer getPolicyId() { return policyId; }
-    public void setPolicyId(Integer policyId) { this.policyId = policyId; }
+	public String getVehicleType() {
+		return vehicleType;
+	}
 
-    public String getVehicleType() { return vehicleType; }
-    public void setVehicleType(String vehicleType) { this.vehicleType = vehicleType; }
+	public void setVehicleType(String vehicleType) {
+		this.vehicleType = vehicleType;
+	}
 
-    public String getVehicleModel() { return vehicleModel; }
-    public void setVehicleModel(String vehicleModel) { this.vehicleModel = vehicleModel; }
+	public String getStatus() {
+		return status;
+	}
 
-    public String getPrstatus() { return prstatus; }
-    public void setPrstatus(String prstatus) { this.prstatus = prstatus; }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 
-    public Integer getQuoteId() { return quoteId; }
-    public void setQuoteId(Integer quoteId) { this.quoteId = quoteId; }
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+    
 }

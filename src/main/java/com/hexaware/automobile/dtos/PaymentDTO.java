@@ -1,29 +1,53 @@
 package com.hexaware.automobile.dtos;
 
-import com.hexaware.automobile.entities.PaymentStatus;
-import java.math.BigDecimal;
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDateTime;
 
 public class PaymentDTO {
-    private Integer paymentId;
-    private Integer quoteId;  // We'll store just Quote ID here to avoid entity exposure
-    private LocalDateTime paidAt;
-    private BigDecimal amountPaid;
-    private PaymentStatus pmstatus;
 
-    // Getters & Setters
-    public Integer getPaymentId() { return paymentId; }
-    public void setPaymentId(Integer paymentId) { this.paymentId = paymentId; }
+    
+    private Long id;
 
-    public Integer getQuoteId() { return quoteId; }
-    public void setQuoteId(Integer quoteId) { this.quoteId = quoteId; }
+    @NotNull(message = "Quote ID is mandatory")
+    private Long quoteId;
 
-    public LocalDateTime getPaidAt() { return paidAt; }
-    public void setPaidAt(LocalDateTime paidAt) { this.paidAt = paidAt; }
+    private Boolean paymentStatus;
 
-    public BigDecimal getAmountPaid() { return amountPaid; }
-    public void setAmountPaid(BigDecimal amountPaid) { this.amountPaid = amountPaid; }
+    private LocalDateTime paidOn;
 
-    public PaymentStatus getPmstatus() { return pmstatus; }
-    public void setPmstatus(PaymentStatus pmstatus) { this.pmstatus = pmstatus; }
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getQuoteId() {
+		return quoteId;
+	}
+
+	public void setQuoteId(Long quoteId) {
+		this.quoteId = quoteId;
+	}
+
+	public Boolean getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(Boolean paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
+	public LocalDateTime getPaidOn() {
+		return paidOn;
+	}
+
+	public void setPaidOn(LocalDateTime paidOn) {
+		this.paidOn = paidOn;
+	}
+
+    
 }
+

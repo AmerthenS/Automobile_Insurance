@@ -2,71 +2,80 @@ package com.hexaware.automobile.entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "users")
 public class User {
-    public User() {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    private String address;
+
+    @Column(name = "aadhaar_number", length = 12)
+    private String aadhaarNumber;
+
+    @Column(name = "pan_number", length = 10)
+    private String panNumber;
+
+    private LocalDate dob;
+
+    @Enumerated(EnumType.STRING)
+    private User.Role role = User.Role.ROLE_USER;
+
+    
+
+    public enum Role {
+        ROLE_USER,
+        ROLE_OFFICER
+    }
+    
+
+	public User(Long id, String name, String email, String password, String address, String aadhaarNumber,
+			String panNumber, LocalDate dob, Role role) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.address = address;
+		this.aadhaarNumber = aadhaarNumber;
+		this.panNumber = panNumber;
+		this.dob = dob;
+		this.role = role;
+	}
+	
+
+	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(Integer userId, String uname, LocalDate dob, String aadhaar, String pan, String email, String upassword,
-			String address, List<Proposal> proposals, List<Claim> claims) {
-		super();
-		this.userId = userId;
-		this.uname = uname;
-		this.dob = dob;
-		this.aadhaar = aadhaar;
-		this.pan = pan;
-		this.email = email;
-		this.upassword = upassword;
-		this.address = address;
-		this.proposals = proposals;
-		this.claims = claims;
+
+	public Long getId() {
+		return id;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public String getName() {
+		return name;
 	}
 
-	public String getUname() {
-		return uname;
-	}
-
-	public void setUname(String uname) {
-		this.uname = uname;
-	}
-
-	public LocalDate getDob() {
-		return dob;
-	}
-
-	public void setDob(LocalDate dob) {
-		this.dob = dob;
-	}
-
-	public String getAadhaar() {
-		return aadhaar;
-	}
-
-	public void setAadhaar(String aadhaar) {
-		this.aadhaar = aadhaar;
-	}
-
-	public String getPan() {
-		return pan;
-	}
-
-	public void setPan(String pan) {
-		this.pan = pan;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getEmail() {
@@ -77,12 +86,12 @@ public class User {
 		this.email = email;
 	}
 
-	public String getUpassword() {
-		return upassword;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setUpassword(String upassword) {
-		this.upassword = upassword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getAddress() {
@@ -93,43 +102,36 @@ public class User {
 		this.address = address;
 	}
 
-	public List<Proposal> getProposals() {
-		return proposals;
+	public String getAadhaarNumber() {
+		return aadhaarNumber;
 	}
 
-	public void setProposals(List<Proposal> proposals) {
-		this.proposals = proposals;
+	public void setAadhaarNumber(String aadhaarNumber) {
+		this.aadhaarNumber = aadhaarNumber;
 	}
 
-	public List<Claim> getClaims() {
-		return claims;
+	public String getPanNumber() {
+		return panNumber;
 	}
 
-	public void setClaims(List<Claim> claims) {
-		this.claims = claims;
+	public void setPanNumber(String panNumber) {
+		this.panNumber = panNumber;
 	}
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
-    private String uname;
-    private LocalDate dob;
-    @Column(unique = true, length = 12)
-    private String aadhaar;
-    @Column(unique = true, length = 10)
-    private String pan;
-    @Column(unique = true)
-    private String email;
-    private String upassword;
-    @Column(columnDefinition = "TEXT")
-    private String address;
+	public LocalDate getDob() {
+		return dob;
+	}
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Proposal> proposals;
+	public void setDob(LocalDate dob) {
+		this.dob = dob;
+	}
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Claim> claims;
+	public Role getRole() {
+		return role;
+	}
 
-   
+	public void setRole(Role role) {
+		this.role = role;
+	}
+    
 }

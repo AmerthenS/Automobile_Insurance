@@ -3,36 +3,62 @@ package com.hexaware.automobile.entities;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-
 @Entity
-@Table(name="proposals")
+@Table(name = "proposals")
 public class Proposal {
-    public Proposal() {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Column(name = "vehicle_type")
+    private String vehicleType;
+
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.SUBMITTED;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    public enum Status {
+        SUBMITTED,
+        DOCUMENTS_REQUESTED,
+        QUOTE_GENERATED,
+        PAYMENT_PENDING,
+        ACTIVE,
+        REJECTED,
+        EXPIRED
+    }
+
+	public Proposal(Long id, User user, String vehicleType, Status status, LocalDateTime createdAt,
+			LocalDateTime updatedAt) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.vehicleType = vehicleType;
+		this.status = status;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+
+	public Proposal() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Proposal(Integer proposalId, User user, Policy policy, String vehicleType, String vehicleModel,
-			ProposalStatus prstatus, LocalDateTime createdAt, Quote quote) {
-		super();
-		this.proposalId = proposalId;
-		this.user = user;
-		this.policy = policy;
-		this.vehicleType = vehicleType;
-		this.vehicleModel = vehicleModel;
-		this.prstatus = prstatus;
-		this.createdAt = createdAt;
-		this.quote = quote;
+	public Long getId() {
+		return id;
 	}
 
-	public Integer getProposalId() {
-		return proposalId;
-	}
-
-	public void setProposalId(Integer proposalId) {
-		this.proposalId = proposalId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public User getUser() {
@@ -43,14 +69,6 @@ public class Proposal {
 		this.user = user;
 	}
 
-	public Policy getPolicy() {
-		return policy;
-	}
-
-	public void setPolicy(Policy policy) {
-		this.policy = policy;
-	}
-
 	public String getVehicleType() {
 		return vehicleType;
 	}
@@ -59,20 +77,12 @@ public class Proposal {
 		this.vehicleType = vehicleType;
 	}
 
-	public String getVehicleModel() {
-		return vehicleModel;
+	public Status getStatus() {
+		return status;
 	}
 
-	public void setVehicleModel(String vehicleModel) {
-		this.vehicleModel = vehicleModel;
-	}
-
-	public ProposalStatus getPrstatus() {
-		return prstatus;
-	}
-
-	public void setPrstatus(ProposalStatus prstatus) {
-		this.prstatus = prstatus;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -83,35 +93,13 @@ public class Proposal {
 		this.createdAt = createdAt;
 	}
 
-	public Quote getQuote() {
-		return quote;
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
 	}
 
-	public void setQuote(Quote quote) {
-		this.quote = quote;
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer proposalId;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonBackReference
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "policy_id")
-    private Policy policy;
-
-    private String vehicleType;
-    private String vehicleModel;
-
-    @Enumerated(EnumType.STRING)
-    private ProposalStatus prstatus = ProposalStatus.proposal_submitted;
-
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @OneToOne(mappedBy = "proposal", cascade = CascadeType.ALL)
-    private Quote quote;
+    
 }
