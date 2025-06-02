@@ -1,3 +1,13 @@
+/*
+ * PolicyRepository.java
+ * 
+ * Repository interface extending JpaRepository to manage Policy entities
+ * with Long IDs. Provides methods to find a Policy by proposal ID (optional)
+ * and to find all Policies by the user ID associated with the proposal.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.repositories;
 
 import com.hexaware.automobile.entities.Policy;

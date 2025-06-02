@@ -1,3 +1,27 @@
+/*
+ * UserServiceImpl.java
+ * 
+ * Implements UserService to manage user-related operations including:
+ * - User registration with validation and password encryption (BCrypt).
+ * - User login with password verification and JWT token generation.
+ * - Retrieval of user details by ID and listing all users.
+ * - Update user profile (excluding password and email).
+ * - User deletion by ID.
+ * - DTO to Entity and Entity to DTO conversion with role mapping.
+ * - Logging for major operations (registration, login, update, deletion).
+ * - Exception handling for validation errors, duplicate email, resource not found, and authentication failures.
+ * - Validation using Jakarta Bean Validation API.
+ * - Password masking in returned UserDTO for security.
+ * 
+ * Dependencies:
+ * - Spring Security PasswordEncoder for hashing passwords.
+ * - JwtUtil for JWT token creation.
+ * - UserRepository for data access.
+ * 
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.services.impl;
 
 import com.hexaware.automobile.dtos.UserDTO;

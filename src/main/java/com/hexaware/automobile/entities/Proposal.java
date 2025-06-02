@@ -1,3 +1,14 @@
+/*
+ * Proposal.java
+ * 
+ * Entity class representing insurance proposals.
+ * Maps the proposals table with fields for user reference, vehicle type,
+ * proposal status, and timestamps for creation and last update.
+ * Used to track the progress and status of user insurance proposals.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.entities;
 
 import jakarta.persistence.*;

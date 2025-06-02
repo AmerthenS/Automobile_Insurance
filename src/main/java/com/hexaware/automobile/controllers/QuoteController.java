@@ -1,3 +1,12 @@
+/*
+ * File: QuoteController.java
+ * Author: Amerthen
+ * Date: 2025-06-02
+ * Description: Handles quote management with role-based access control:
+ *              - Officers can create, update, delete, and list all quotes.
+ *              - Both users and officers can fetch quotes by ID or by associated proposal.
+ *              Key operations are logged for audit and debugging purposes.
+ */
 package com.hexaware.automobile.controllers;
 
 import com.hexaware.automobile.dtos.QuoteDTO;

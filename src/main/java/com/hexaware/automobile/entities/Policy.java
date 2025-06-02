@@ -1,3 +1,15 @@
+/*
+ * Policy.java
+ * 
+ * Entity class representing insurance policies in the database.
+ * Maps the policies table with fields for unique policy number, linked proposal, coverage dates,
+ * PDF document URL, and current status (ACTIVE, EXPIRED, or REJECTED).
+ * Used to store and manage issued insurance policies.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
+
 package com.hexaware.automobile.entities;
 
 import jakarta.persistence.*;

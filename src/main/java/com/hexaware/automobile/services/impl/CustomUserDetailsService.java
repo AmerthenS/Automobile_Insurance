@@ -1,3 +1,14 @@
+/*
+ * CustomUserDetailsService.java
+ * 
+ * Service class implementing UserDetailsService to load user authentication details
+ * by email. Checks first in User repository, then in Officer repository.
+ * Returns a CustomUserDetails object for Spring Security if found,
+ * otherwise throws UsernameNotFoundException.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.services.impl;
 
 import com.hexaware.automobile.entities.Officer;

@@ -1,3 +1,10 @@
+/*
+ * File: SecurityConfig.java
+ * Author: Amerthen
+ * Date: 2025-06-02
+ * Description: Configures JWT-based stateless authentication and public endpoint access
+ */
+
 package com.hexaware.automobile.config;
 
 import com.hexaware.automobile.filters.JwtRequestFilter;

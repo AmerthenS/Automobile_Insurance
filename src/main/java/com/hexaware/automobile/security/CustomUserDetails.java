@@ -1,3 +1,13 @@
+/*
+ * CustomUserDetails.java
+ * 
+ * Implements Spring Security's UserDetails to provide authentication information 
+ * for both User and Officer entities. Encapsulates user ID, email, password, 
+ * role, and authorities for security context use.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.security;
 
 import org.springframework.security.core.GrantedAuthority;

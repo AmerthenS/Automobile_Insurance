@@ -1,3 +1,22 @@
+/*
+ * QuoteServiceImpl.java
+ * 
+ * Implements QuoteService to handle CRUD operations for Quote entities.
+ * 
+ * Features:
+ * - Validates existence of associated Proposal before creating or updating Quotes.
+ * - Manages timestamp for quote generation, defaulting to current time if not provided.
+ * - Converts between Quote entities and QuoteDTOs for API communication.
+ * - Provides methods to fetch Quotes by ID, by Proposal ID, and retrieve all Quotes.
+ * - Supports update and deletion operations with proper error handling.
+ * - Uses SLF4J logging to trace method calls and key events.
+ * - Ensures transactional consistency for create, update, and delete operations.
+ * 
+ * Throws ResourceNotFoundException when the requested Quote or Proposal does not exist.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.services.impl;
 
 import com.hexaware.automobile.dtos.QuoteDTO;

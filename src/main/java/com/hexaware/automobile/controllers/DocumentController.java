@@ -1,4 +1,13 @@
+/*
+ * File: DocumentController.java
+ * Author: Amerthen
+ * Date: 2025-06-02
+ * Description: Provides secured REST endpoints for officers to upload, fetch,
+ *              and verify insurance-related documents based on proposals.
+ */
+
 package com.hexaware.automobile.controllers;
+
 
 import com.hexaware.automobile.dtos.DocumentDTO;
 import com.hexaware.automobile.entities.Document;

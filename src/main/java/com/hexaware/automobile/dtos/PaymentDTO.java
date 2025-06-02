@@ -1,3 +1,13 @@
+/*
+ * PaymentDTO.java
+ * 
+ * DTO for payment details linked to a quote with validation on quoteId, payment status, and payment timestamp.
+ * Ensures required fields are validated before backend processing.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
+
 package com.hexaware.automobile.dtos;
 
 import jakarta.validation.constraints.*;

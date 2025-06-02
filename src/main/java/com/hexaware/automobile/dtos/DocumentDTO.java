@@ -1,3 +1,16 @@
+/*
+ * DocumentDTO.java
+ * 
+ * Acts as a Data Transfer Object to carry document information associated with a proposal.
+ * Ensures backend processing receives valid and required fields through bean validation annotations.
+ * Fields include:
+ * - id: Document identifier.
+ * - proposalId: Associated proposal's ID (mandatory).
+ * - docType: Type of document (mandatory, max 50 chars).
+ * - fileUrl: URL or path of the stored file (mandatory, max 255 chars).
+ * - verified: Flag indicating if the document is verified.
+ * - remarks: Optional remarks or comments (max 255 chars).
+ */
 package com.hexaware.automobile.dtos;
 
 import jakarta.validation.constraints.*;

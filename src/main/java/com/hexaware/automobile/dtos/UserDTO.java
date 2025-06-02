@@ -1,3 +1,13 @@
+/*
+ * UserDTO.java
+ * 
+ * Represents user data transferred between client and server with validation 
+ * on fields such as name, email, password, Aadhaar number, PAN number, date of birth, and role.
+ * Includes a derived read-only age property calculated from the date of birth.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

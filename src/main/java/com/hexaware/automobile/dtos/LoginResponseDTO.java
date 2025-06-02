@@ -1,3 +1,14 @@
+/*
+ * LoginResponseDTO.java
+ * 
+ * Data Transfer Object that encapsulates the JWT token issued after a successful login,
+ * along with a message providing additional information to the client.
+ * This object is returned as the response payload for authentication requests.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
+
 package com.hexaware.automobile.dtos;
 
 public class LoginResponseDTO {

@@ -1,3 +1,13 @@
+/*
+ * UserRepository.java
+ * 
+ * Repository interface extending JpaRepository to manage User entities
+ * with Long IDs. Provides methods to find users by their email address,
+ * supporting both case-sensitive and case-insensitive searches.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.repositories;
 
 import com.hexaware.automobile.entities.User;

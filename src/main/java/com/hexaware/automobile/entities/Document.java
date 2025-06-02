@@ -1,3 +1,14 @@
+/*
+ * Document.java
+ * 
+ * Entity class representing the documents table in the database.
+ * This entity stores document details associated with a Proposal, including document type,
+ * file URL, verification status, and optional remarks.
+ * It maintains a many-to-one relationship with the Proposal entity.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.entities;
 import jakarta.persistence.*;
 

@@ -1,3 +1,11 @@
+/*
+ * File: PaymentController.java
+ * Author: Amerthen
+ * Date: 2025-06-02
+ * Description: Provides secured REST endpoints to create, retrieve, update, and delete payment records,
+ *              with role-based access control (users can create/update, officers can view/delete all payments)
+ *              and detailed logging for each operation.
+ */
 package com.hexaware.automobile.controllers;
 
 import com.hexaware.automobile.dtos.PaymentDTO;

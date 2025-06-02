@@ -1,3 +1,21 @@
+/*
+ * OfficerServiceImpl.java
+ * 
+ * Service implementation for Officer-related business logic including:
+ * - Registering officers with encrypted passwords and JWT token generation
+ * - Retrieving officers by ID or all officers as DTOs
+ * - Updating officer details including password changes
+ * - Deleting officers by ID
+ * - Authenticating officers on login with password verification and JWT token issuance
+ * - Checking existence of officer email
+ * 
+ * Uses OfficerRepository for database operations, PasswordEncoder for security,
+ * JwtUtil for JWT token creation, and maps entities to OfficerDTO to avoid exposing sensitive data.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
+
 package com.hexaware.automobile.services.impl;
 
 import com.hexaware.automobile.dtos.OfficerDTO;
@@ -110,7 +128,7 @@ public class OfficerServiceImpl implements OfficerService {
         dto.setName(officer.getName());
         dto.setEmail(officer.getEmail());
         dto.setRole(officer.getRole().name());
-        dto.setPassword(null); // never expose password
+        dto.setPassword(null); 
         return dto;
     }
 }

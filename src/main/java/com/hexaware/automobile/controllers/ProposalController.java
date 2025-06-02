@@ -1,3 +1,13 @@
+/*
+ * File: ProposalController.java
+ * Author: Amerthen
+ * Date: 2025-06-02
+ * Description: Manages user proposals with role-based access control:
+ *              - Users can create, view, and list their own proposals.
+ *              - Officers have full control to update, delete, and retrieve all proposals.
+ *              The controller maps entities to DTOs for clean API responses and
+ *              logs key actions for traceability.
+ */
 package com.hexaware.automobile.controllers;
 
 import com.hexaware.automobile.dtos.ProposalDTO;

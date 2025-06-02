@@ -1,3 +1,20 @@
+/*
+ * ProposalServiceImpl.java
+ * 
+ * Implements ProposalService to manage Proposal entities with full CRUD operations.
+ * 
+ * Key responsibilities:
+ * - Validates existence of associated User before creating or updating Proposals.
+ * - Manages Proposal status using enum with default to SUBMITTED.
+ * - Handles creation and update timestamps automatically.
+ * - Provides retrieval of Proposals by ID and by User ID.
+ * - Deletes Proposals by ID.
+ * - Uses SLF4J logging for tracing actions and debugging.
+ * - Throws IllegalArgumentException when referenced User or Proposal is not found.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.services.impl;
 
 import com.hexaware.automobile.dtos.ProposalDTO;

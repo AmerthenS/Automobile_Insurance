@@ -1,3 +1,13 @@
+/*
+ * Payment.java
+ * 
+ * Entity class representing the payments table in the database.
+ * Stores payment details linked to a unique quote, including payment status and timestamp.
+ * Used to track the status and timing of payments for insurance quotes.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.entities;
 
 import jakarta.persistence.*;

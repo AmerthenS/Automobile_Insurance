@@ -1,3 +1,20 @@
+/*
+ * PaymentServiceImpl.java
+ * 
+ * Implements PaymentService interface with CRUD operations for Payment entity.
+ * 
+ * Key features:
+ * - Maps between PaymentDTO and Payment entity, including Quote association.
+ * - Validates existence of associated Quote before creating or updating Payment.
+ * - Creates, retrieves (by Payment ID or Quote ID), updates, and deletes Payment records.
+ * - Retrieves all Payment records and converts them to DTOs.
+ * - Uses SLF4J logging for tracing operations and error handling.
+ * - Throws ResourceNotFoundException when referenced entities are missing.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
+
 package com.hexaware.automobile.services.impl;
 
 import com.hexaware.automobile.dtos.PaymentDTO;

@@ -1,3 +1,14 @@
+/*
+ * QuoteDTO.java
+ * 
+ * DTO for insurance quote with validation on proposal ID and positive amount.
+ * Includes timestamp for when the quote was generated.
+ * Ensures all required fields are valid before backend processing.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
+
 package com.hexaware.automobile.dtos;
 
 import jakarta.validation.constraints.*;

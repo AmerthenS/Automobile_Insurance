@@ -1,3 +1,12 @@
+/*
+ * PolicyDTO.java
+ * 
+ * DTO representing insurance policy data with validation on proposal ID, policy number, dates,
+ * PDF URL, and status. Ensures backend receives valid and mandatory data before processing.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.dtos;
 
 import jakarta.validation.constraints.*;

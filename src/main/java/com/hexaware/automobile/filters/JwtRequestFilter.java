@@ -1,3 +1,17 @@
+/*
+ * JwtRequestFilter.java
+ * 
+ * Filter that intercepts each HTTP request once to:
+ * - Extract and validate JWT token from the Authorization header.
+ * - Load user details via CustomUserDetailsService if the token is valid.
+ * - Set authentication in SecurityContextHolder to authorize downstream access.
+ * 
+ * Ensures secured endpoints are accessed only by authenticated users with valid JWTs.
+ * Handles token parsing errors gracefully and logs them.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.filters;
 
 import com.hexaware.automobile.services.impl.CustomUserDetailsService;

@@ -1,3 +1,14 @@
+/*
+ * Quote.java
+ * 
+ * Entity class representing insurance quotes.
+ * Maps the quotes table with fields for linked proposal, quote amount,
+ * and timestamp when the quote was generated.
+ * Used to store and manage quote details corresponding to insurance proposals.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.entities;
 
 import jakarta.persistence.*;

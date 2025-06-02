@@ -1,3 +1,14 @@
+/*
+ * DocumentRepository.java
+ * 
+ * Repository interface extending JpaRepository to provide CRUD operations
+ * for Document entities. Includes a custom method to retrieve documents
+ * associated with a specific proposalId.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
+
 package com.hexaware.automobile.repositories;
 
 import com.hexaware.automobile.entities.Document;

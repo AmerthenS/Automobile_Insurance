@@ -1,3 +1,15 @@
+/*
+ * User.java
+ * 
+ * Entity class representing users of the automobile insurance system.
+ * Maps the users table and holds user information such as personal details,
+ * login credentials, government IDs (Aadhaar, PAN), date of birth, and role.
+ * Role can be either ROLE_USER or ROLE_OFFICER to differentiate access levels.
+ * This class is foundational for authentication, authorization, and user profile management.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.entities;
 
 import jakarta.persistence.*;

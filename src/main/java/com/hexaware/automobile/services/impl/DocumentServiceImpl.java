@@ -1,3 +1,17 @@
+/*
+ * DocumentServiceImpl.java
+ * 
+ * Service implementation for Document entity business logic including:
+ * - Uploading documents linked to a Proposal
+ * - Fetching documents by Proposal ID
+ * - Verifying documents (restricted to users with OFFICER role)
+ * 
+ * Maps between Document and DocumentDTO, logs key operations,
+ * and throws ResourceNotFoundException when Proposal or Document is not found.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.services.impl;
 
 import com.hexaware.automobile.dtos.DocumentDTO;

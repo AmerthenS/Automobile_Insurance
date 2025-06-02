@@ -1,3 +1,11 @@
+/*
+ * File: OfficerController.java
+ * Author: Amerthen
+ * Date: 2025-06-02
+ * Description: Exposes REST APIs for officer management including registration,
+ *              login, retrieval, update, and deletion of officer records with
+ *              appropriate logging and error handling.
+ */
 package com.hexaware.automobile.controllers;
 
 import com.hexaware.automobile.dtos.OfficerDTO;

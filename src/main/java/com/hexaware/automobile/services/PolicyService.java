@@ -1,3 +1,13 @@
+/*
+ * PolicyService.java
+ * 
+ * Service interface defining methods to manage insurance policies.
+ * Supports creating, retrieving by ID or proposal ID, updating, listing all, deleting policies,
+ * and retrieving policies by user ID.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.services;
 
 import com.hexaware.automobile.dtos.PolicyDTO;

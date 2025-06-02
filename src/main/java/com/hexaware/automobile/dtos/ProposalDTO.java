@@ -1,3 +1,14 @@
+/*
+ * ProposalDTO.java
+ * 
+ * DTO for insurance proposal with validation on user ID, vehicle type, and status.
+ * Includes timestamps for creation and updates.
+ * Ensures backend processing only proceeds with valid, required fields.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
+
 package com.hexaware.automobile.dtos;
 
 import jakarta.validation.constraints.*;

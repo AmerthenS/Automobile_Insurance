@@ -1,3 +1,13 @@
+/*
+ * OfficerService.java
+ * 
+ * Service interface declaring operations for managing officers in the system.
+ * Includes methods for officer registration, retrieval by ID, updating,
+ * deleting, login authentication, and checking email existence.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.services;
 
 import com.hexaware.automobile.dtos.OfficerDTO;

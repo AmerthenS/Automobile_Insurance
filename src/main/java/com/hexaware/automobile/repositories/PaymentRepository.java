@@ -1,3 +1,13 @@
+/*
+ * PaymentRepository.java
+ * 
+ * Repository interface extending JpaRepository to manage Payment entities
+ * with Long IDs. Provides a method to find a Payment by its associated
+ * Quote entity.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.repositories;
 
 import com.hexaware.automobile.entities.Payment;

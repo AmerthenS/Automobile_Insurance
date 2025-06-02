@@ -1,3 +1,14 @@
+/*
+ * Officer.java
+ * 
+ * Entity class representing the officers table in the database.
+ * This entity stores officer details such as name, email, password, and role.
+ * The role is an enum inherited from the User entity, defaulting to ROLE_OFFICER.
+ * Used for authentication and authorization of officer users in the system.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.entities;
 
 import com.hexaware.automobile.entities.User.Role;

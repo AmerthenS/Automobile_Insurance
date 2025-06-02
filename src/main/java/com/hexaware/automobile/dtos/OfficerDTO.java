@@ -1,3 +1,19 @@
+/*
+ * OfficerDTO.java
+ * 
+ * Transfers Officer data between client and server.
+ * Ensures validation of fields such as password, role, name, and email using bean validation annotations.
+ * Fields include:
+ * - officerId: Unique identifier for the officer.
+ * - password: Officer's password (mandatory, minimum 6 characters).
+ * - role: Role assigned to the officer (mandatory).
+ * - name: Officer's full name (mandatory).
+ * - email: Officer's email address (mandatory, valid email format).
+ * - jwtToken: JWT token for authentication responses.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.dtos;
 
 import jakarta.validation.constraints.Email;

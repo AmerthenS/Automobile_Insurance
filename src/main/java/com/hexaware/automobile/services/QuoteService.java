@@ -1,3 +1,13 @@
+/*
+ * QuoteService.java
+ * 
+ * Service interface defining CRUD operations for Quote entities.
+ * Provides methods to create, retrieve by ID or proposal ID, update, delete,
+ * and fetch all quotes.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.services;
 
 import com.hexaware.automobile.dtos.QuoteDTO;

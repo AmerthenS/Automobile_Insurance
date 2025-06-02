@@ -1,3 +1,13 @@
+/*
+ * UserService.java
+ * 
+ * Service interface defining user-related operations including user registration,
+ * login, logout, fetching user details by ID, updating user information,
+ * retrieving all users, and deleting users.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.services;
 
 import com.hexaware.automobile.dtos.UserDTO;

@@ -1,3 +1,10 @@
+/*
+ * File: AuthController.java
+ * Author: Amerthen
+ * Date: 2025-06-02
+ * Description: Handles user and officer login requests, authenticates credentials,
+ *              and returns JWT token upon successful login.
+ */
 package com.hexaware.automobile.controllers;
 
 import com.hexaware.automobile.dtos.LoginRequestDTO;

@@ -1,3 +1,12 @@
+/*
+ * File: PolicyController.java
+ * Author: Amerthen
+ * Date: 2025-06-02
+ * Description: Provides role-based REST endpoints where users can view their own policies securely,
+ *              and officers have permissions to view all policies and update policy details,
+ *              leveraging Spring Security to enforce access and extracting user details from the
+ *              security context for personalized data retrieval.
+ */
 package com.hexaware.automobile.controllers;
 
 import com.hexaware.automobile.dtos.PolicyDTO;
@@ -30,26 +39,26 @@ public class PolicyController {
     public ResponseEntity<List<PolicyDTO>> getMyPolicies() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         
-        // Assuming userId is stored as a claim or in principal details:
+        
         Long userId = extractUserIdFromAuthentication(auth);
         
         List<PolicyDTO> policies = policyService.getPoliciesByUserId(userId);
         return ResponseEntity.ok(policies);
     }
 
-    // Helper method (implement based on your JWT principal structure)
+    
     private Long extractUserIdFromAuthentication(Authentication auth) {
-        // Example if your principal is a UserDetails with getId method:
+    
         Object principal = auth.getPrincipal();
         if (principal instanceof CustomUserDetails) {
             return ((CustomUserDetails) principal).getId();
         }
-        // Or, if userId is stored in JWT claims, retrieve from there
+        
         throw new IllegalStateException("User ID not found in authentication principal");
     }
 
 
-    // OFFICERS: View all policies
+    
     @GetMapping
     @PreAuthorize("hasRole('OFFICER')")
     public ResponseEntity<List<PolicyDTO>> getAllPolicies() {
@@ -57,7 +66,7 @@ public class PolicyController {
         return ResponseEntity.ok(policies);
     }
 
-    // OFFICERS: Update a policy (status, dates, etc)
+    
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('OFFICER')")
     public ResponseEntity<PolicyDTO> updatePolicy(@PathVariable Long id, @Valid @RequestBody PolicyDTO policyDTO) {

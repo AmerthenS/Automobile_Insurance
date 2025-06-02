@@ -1,3 +1,20 @@
+/*
+ * PolicyServiceImpl.java
+ * 
+ * Implements PolicyService interface providing CRUD operations for Policy entity.
+ * 
+ * Features:
+ * - Validates existence of related Proposal before creating or updating Policy.
+ * - Maps between Policy entity and PolicyDTO for data transfer.
+ * - Supports fetching policies by Policy ID, Proposal ID, and User ID.
+ * - Handles deletion and updates of Policy records with appropriate validations.
+ * - Uses SLF4J logging to track operations and errors.
+ * - Ensures transactional consistency for database operations.
+ * - Throws ResourceNotFoundException for missing entities and handles invalid status values.
+ * 
+ * Author: Amerthen
+ * Date: 2025-06-02
+ */
 package com.hexaware.automobile.services.impl;
 
 import com.hexaware.automobile.dtos.PolicyDTO;
